@@ -1,0 +1,71 @@
+.card-list {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-bottom: 40px;
+  margin-left: 20px;
+}
+
+.card {
+  scroll-snap-align: start;
+  min-width: 230px;
+  margin-right: 20px;
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+/*.simButton css*/
+
+.simButton {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #3d405b;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 17px;
+  padding: 10px;
+  width: 130px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 10px 5px;
+}
+
+.simButton .simSpan {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.simButton .simSpan:after {
+  content: "»";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -15px;
+  transition: 0.5s;
+}
+
+.simButton:hover .simSpan {
+  padding-right: 15px;
+}
+
+.simButton:hover .simSpan:after {
+  opacity: 1;
+  right: 0;
+}

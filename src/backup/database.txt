@@ -1,0 +1,695 @@
+User profile information: This can include the user's name, email address, and password.
+
+Favorite recipes: Users can be allowed to mark recipes as their favorites, and this information can be stored in the database to allow for easy access to their favorite recipes.
+
+Recipe ratings and reviews: Users can rate and review recipes they've tried, and this information can be stored in the database to help them remember which recipes they liked and which ones they didn't.
+
+Meal plans: Users can create meal plans for the week, and this information can be stored in the database so that they can easily access their meal plan for the day or week.
+
+Shopping lists: Users can create shopping lists based on the recipes they want to make, and this information can be stored in the database so that they can easily access their shopping list while at the grocery store.
+
+Dietary restrictions: Users can specify any dietary restrictions they have, such as being vegetarian, gluten-free, or dairy-free, and this information can be stored in the database to allow for personalized recipe recommendations.
+
+Search history: Users can save their search history to easily access previously searched recipes or ingredients.
+
+User preferences: Users can set their preferences for serving sizes, cuisines, and ingredients, which can be stored in the database to personalize their recipe recommendations.
+
+By storing these types of data in the Firestore database, users can have a more personalized and convenient experience in the recipe search and meal planning application.
+
+
+The user profile data for a recipe search and meal planning application could include the following information:
+
+First name
+Last name
+Email address
+Password (encrypted)
+Dietary preferences (e.g. vegetarian, gluten-free, etc.)
+Allergies (e.g. peanuts, shellfish, etc.)
+Preferred cuisine (e.g. Italian, Mexican, etc.)
+Cooking skills (e.g. beginner, intermediate, advanced)
+Kitchen equipment (e.g. blender, slow cooker, etc.)
+Preferred ingredients (e.g. chicken, tofu, etc.)
+Favourite recipes
+Meal plans
+Shopping lists
+Storing this information in Firestore can provide a way to personalize the user's experience and make the recipe search and meal planning process more efficient. With this data, the application can suggest recipes that fit the user's dietary preferences and allergies, recommend meal plans based on their preferred cuisine and ingredients, and generate shopping lists that include only the necessary items for the user's selected recipes.
+
+
+save recipe : 
+import { useState } from 'react';
+import { firestore } from '../firebase.js';
+
+const FavoriteRecipes = ({ userId }) => {
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+
+  const handleAddFavoriteRecipe = async (recipeId, recipeTitle) => {
+    // Check if the recipe is already in the favorite recipes list
+    const existingRecipe = favoriteRecipes.find((recipe) => recipe.id === recipeId);
+    if (existingRecipe) {
+      alert('Recipe is already in the favorites list!');
+      return;
+    }
+
+    // Update the favorite recipes list in Firestore
+    const userRef = firestore.collection('users').doc(userId);
+    await userRef.update({
+      favoriteRecipes: firestore.FieldValue.arrayUnion({
+        id: recipeId,
+        title: recipeTitle,
+      }),
+    });
+
+    // Update the local state with the new favorite recipe
+    setFavoriteRecipes([...favoriteRecipes, { id: recipeId, title: recipeTitle }]);
+  };
+
+  return (
+    <div>
+      <h2>Favorite Recipes</h2>
+      <ul>
+        {favoriteRecipes.map((recipe) => (
+          <li key={recipe.id}>{recipe.title}</li>
+        ))}
+      </ul>
+      <button onClick={() => handleAddFavoriteRecipe('RECIPE_ID', 'RECIPE_TITLE')}>
+        Add to Favorites
+      </button>
+    </div>
+  );
+};
+
+export default FavoriteRecipes;
+
+*************************************************************************
+review and rating : 
+import { useState, useEffect } from 'react';
+import { firestore } from '../firebase.js';
+
+const RecipeRating = ({ recipeId, userId }) => {
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState('');
+  const [numRatings, setNumRatings] = useState(0);
+  const [avgRating, setAvgRating] = useState(0);
+
+  // Load the user's existing rating from Firestore on component mount
+  useEffect(() => {
+    const loadUserRating = async () => {
+      const userRating = await firestore
+        .collection('ratings')
+        .where('recipeId', '==', recipeId)
+        .where('userId', '==', userId)
+        .get();
+      if (!userRating.empty) {
+        const userRatingData = userRating.docs[0].data();
+        setRating(userRatingData.rating);
+        setReview(userRatingData.review);
+      }
+    };
+    loadUserRating();
+  }, [recipeId, userId]);
+
+  // Load the number of ratings and the average rating from Firestore using real-time updates
+  useEffect(() => {
+    const unsubscribe = firestore
+      .collection('ratings')
+      .where('recipeId', '==', recipeId)
+      .onSnapshot((snapshot) => {
+        const ratingsData = snapshot.docs.map((doc) => doc.data());
+        const numRatings = ratingsData.length;
+        const sumRatings = ratingsData.reduce((acc, rating) => acc + rating.rating, 0);
+        const avgRating = numRatings > 0 ? sumRatings / numRatings : 0;
+        setNumRatings(numRatings);
+        setAvgRating(avgRating);
+      });
+    return () => unsubscribe();
+  }, [recipeId]);
+
+  const handleRatingChange = (event) => {
+    setRating(parseInt(event.target.value));
+  };
+
+  const handleReviewChange = (event) => {
+    setReview(event.target.value);
+  };
+
+  const handleSaveRating = async () => {
+    // Check if the user has already rated this recipe
+    const existingRating = await firestore
+      .collection('ratings')
+      .where('recipeId', '==', recipeId)
+      .where('userId', '==', userId)
+      .get();
+    if (!existingRating.empty) {
+      alert('You have already rated this recipe!');
+      return;
+    }
+
+    // Save the new rating to Firestore
+    const newRating = {
+      recipeId,
+      userId,
+      rating,
+      review,
+      timestamp: firestore.FieldValue.serverTimestamp(),
+    };
+    await firestore.collection('ratings').add(newRating);
+
+    // Update the user's rating and review in local state
+    setRating(newRating.rating);
+    setReview(newRating.review);
+  };
+
+  return (
+    <div>
+      <h2>Rate and Review Recipe</h2>
+      <div>
+        <label>
+          Rating:
+          <input type="number" min="1" max="5" value={rating} onChange={handleRatingChange} />
+        </label>
+      </div>
+      <div>
+        <label>
+          Review:
+          <textarea value={review} onChange={handleReviewChange} />
+        </label>
+      </div>
+      <button onClick={handleSaveRating}>Save Rating and Review</button>
+      </div>
+      <div>
+        <p>Number of Ratings: {numRatings}</p>
+        <p>Average Rating: {avgRating.toFixed(1)}</p>
+      </div>
+    </div>
+  );
+};
+export default RecipeRating;
+
+user data : 
+import { useState } from 'react';
+import { firestore } from '../firebase.js';
+
+const UserProfile = ({ user }) => {
+  const [name, setName] = useState(user.displayName || '');
+  const [bio, setBio] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleBioChange = (event) => {
+    setBio(event.target.value);
+  };
+
+  const handleImageUrlChange = (event) => {
+    setImageUrl(event.target.value);
+  };
+
+  const handleSaveProfile = async () => {
+    const userProfileRef = firestore.collection('users').doc(user.uid);
+    const userProfileData = {
+      name,
+      bio,
+      imageUrl,
+    };
+    await userProfileRef.set(userProfileData, { merge: true });
+  };
+
+  return (
+    <div>
+      <h2>User Profile</h2>
+      <div>
+        <label>
+          Name:
+          <input type="text" value={name} onChange={handleNameChange} />
+        </label>
+      </div>
+      <div>
+        <label>
+          Bio:
+          <textarea value={bio} onChange={handleBioChange} />
+        </label>
+      </div>
+      <div>
+        <label>
+          Image URL:
+          <input type="text" value={imageUrl} onChange={handleImageUrlChange} />
+        </label>
+      </div>
+      <button onClick={handleSaveProfile}>Save Profile</button>
+    </div>
+  );
+};
+
+export default UserProfile;
+
+
+meal planner :
+import { useState, useEffect } from 'react';
+import { firestore } from '../firebase.js';
+
+const MealPlanner = ({ userId }) => {
+  const [mealPlan, setMealPlan] = useState({});
+
+  // Load the user's meal plan from Firestore on component mount
+  useEffect(() => {
+    const loadMealPlan = async () => {
+      const mealPlanDoc = await firestore.collection('mealPlans').doc(userId).get();
+      if (mealPlanDoc.exists) {
+        setMealPlan(mealPlanDoc.data());
+      }
+    };
+    loadMealPlan();
+  }, [userId]);
+
+  // Save the user's meal plan to Firestore
+  const saveMealPlan = async () => {
+    await firestore.collection('mealPlans').doc(userId).set(mealPlan);
+    alert('Meal plan saved successfully!');
+  };
+
+  // Generate a meal plan for a week
+  const generateMealPlan = () => {
+    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const meals = ['Breakfast', 'Lunch', 'Dinner'];
+    const newMealPlan = {};
+    for (const day of daysOfWeek) {
+      newMealPlan[day] = {};
+      for (const meal of meals) {
+        newMealPlan[day][meal] = '';
+      }
+    }
+    setMealPlan(newMealPlan);
+  };
+
+  return (
+    <div>
+      <h2>Meal Planner</h2>
+      <button onClick={generateMealPlan}>Generate Meal Plan</button>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Breakfast</th>
+            <th>Lunch</th>
+            <th>Dinner</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(mealPlan).map((day) => (
+            <tr key={day}>
+              <td>{day}</td>
+              <td>
+                <input
+                  type="text"
+                  value={mealPlan[day]['Breakfast']}
+                  onChange={(event) =>
+                    setMealPlan((prevState) => ({
+                      ...prevState,
+                      [day]: {
+                        ...prevState[day],
+                        Breakfast: event.target.value,
+                      },
+                    }))
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={mealPlan[day]['Lunch']}
+                  onChange={(event) =>
+                    setMealPlan((prevState) => ({
+                      ...prevState,
+                      [day]: {
+                        ...prevState[day],
+                        Lunch: event.target.value,
+                      },
+                    }))
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={mealPlan[day]['Dinner']}
+                  onChange={(event) =>
+                    setMealPlan((prevState) => ({
+                      ...prevState,
+                      [day]: {
+                        ...prevState[day],
+                        Dinner: event.target.value,
+                      },
+                    }))
+                  }
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button onClick={saveMealPlan}>Save Meal Plan</button>
+    </div>
+  );
+};
+
+export default MealPlanner;
+
+shopping list : 
+import { useState, useEffect } from 'react';
+import { firestore } from '../firebase.js';
+
+const ShoppingList = ({ userId }) => {
+  const [recipes, setRecipes] = useState([]);
+  const [selectedRecipes, setSelectedRecipes] = useState([]);
+  const [shoppingList, setShoppingList] = useState([]);
+
+  // Load the user's recipes from Firestore on component mount
+  useEffect(() => {
+    const loadRecipes = async () => {
+      const userRecipes = await firestore
+        .collection('recipes')
+        .where('userId', '==', userId)
+        .get();
+      const recipesData = userRecipes.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setRecipes(recipesData);
+    };
+    loadRecipes();
+  }, [userId]);
+
+  // Update the shopping list whenever the selected recipes change
+  useEffect(() => {
+    const ingredientsMap = new Map();
+    for (const recipe of selectedRecipes) {
+      for (const ingredient of recipe.ingredients) {
+        const existingIngredient = ingredientsMap.get(ingredient.name);
+        if (existingIngredient) {
+          existingIngredient.amount += ingredient.amount;
+        } else {
+          ingredientsMap.set(ingredient.name, { ...ingredient });
+        }
+      }
+    }
+    setShoppingList(Array.from(ingredientsMap.values()));
+  }, [selectedRecipes]);
+
+  const handleRecipeSelect = (recipe) => {
+    setSelectedRecipes((prevSelectedRecipes) => [...prevSelectedRecipes, recipe]);
+  };
+
+  const handleRecipeDeselect = (recipe) => {
+    setSelectedRecipes((prevSelectedRecipes) =>
+      prevSelectedRecipes.filter((selectedRecipe) => selectedRecipe.id !== recipe.id)
+    );
+  };
+
+  return (
+    <div>
+      <h2>Select Recipes</h2>
+      <ul>
+        {recipes.map((recipe) => (
+          <li key={recipe.id}>
+            <button onClick={() => handleRecipeSelect(recipe)}>Add</button>
+            <button onClick={() => handleRecipeDeselect(recipe)}>Remove</button>
+            {recipe.name}
+          </li>
+        ))}
+      </ul>
+      <h2>Shopping List</h2>
+      <ul>
+        {shoppingList.map((ingredient) => (
+          <li key={ingredient.name}>
+            {ingredient.name} - {ingredient.amount} {ingredient.unit}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default ShoppingList;
+ 
+ css : 
+ .shopping-list {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.shopping-list h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.shopping-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shopping-list li {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.shopping-list li span {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.shopping-list button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.shopping-list button:hover {
+  background-color: #3e8e41;
+}
+*************************************************************
+dietry data : 
+
+import { useState, useEffect } from 'react';
+import { firestore } from '../firebase.js';
+
+const DietaryRestrictions = ({ userId }) => {
+  const [isVegetarian, setIsVegetarian] = useState(false);
+  const [isVegan, setIsVegan] = useState(false);
+  const [isGlutenFree, setIsGlutenFree] = useState(false);
+  const [isDairyFree, setIsDairyFree] = useState(false);
+
+  // Load the user's dietary restrictions from Firestore on component mount
+  useEffect(() => {
+    const loadUserDietaryRestrictions = async () => {
+      const userDoc = await firestore.collection('users').doc(userId).get();
+      if (userDoc.exists) {
+        const userData = userDoc.data();
+        setIsVegetarian(userData.isVegetarian);
+        setIsVegan(userData.isVegan);
+        setIsGlutenFree(userData.isGlutenFree);
+        setIsDairyFree(userData.isDairyFree);
+      }
+    };
+    loadUserDietaryRestrictions();
+  }, [userId]);
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    switch (name) {
+      case 'vegetarian':
+        setIsVegetarian(checked);
+        break;
+      case 'vegan':
+        setIsVegan(checked);
+        break;
+      case 'gluten-free':
+        setIsGlutenFree(checked);
+        break;
+      case 'dairy-free':
+        setIsDairyFree(checked);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSaveDietaryRestrictions = async () => {
+    const updatedUserData = {
+      isVegetarian,
+      isVegan,
+      isGlutenFree,
+      isDairyFree,
+    };
+    await firestore.collection('users').doc(userId).update(updatedUserData);
+  };
+
+  return (
+    <div>
+      <h2>Dietary Restrictions</h2>
+      <form>
+        <label>
+          Vegetarian:
+          <input type="checkbox" name="vegetarian" checked={isVegetarian} onChange={handleCheckboxChange} />
+        </label>
+        <br />
+        <label>
+          Vegan:
+          <input type="checkbox" name="vegan" checked={isVegan} onChange={handleCheckboxChange} />
+        </label>
+        <br />
+        <label>
+          Gluten-free:
+          <input type="checkbox" name="gluten-free" checked={isGlutenFree} onChange={handleCheckboxChange} />
+        </label>
+        <br />
+        <label>
+          Dairy-free:
+          <input type="checkbox" name="dairy-free" checked={isDairyFree} onChange={handleCheckboxChange} />
+        </label>
+        <br />
+        <button onClick={handleSaveDietaryRestrictions}>Save</button>
+      </form>
+    </div>
+  );
+};
+
+export default DietaryRestrictions;
+**************************************************************
+user preference data : 
+
+import { useState, useEffect } from 'react';
+import { firestore } from '../firebase.js';
+
+const UserPreferences = ({ userId }) => {
+  const [servingSize, setServingSize] = useState(4);
+  const [cuisines, setCuisines] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+
+  // Load the user's existing preferences from Firestore on component mount
+  useEffect(() => {
+    const loadUserPreferences = async () => {
+      const userPreferences = await firestore
+        .collection('preferences')
+        .doc(userId)
+        .get();
+      if (userPreferences.exists) {
+        const userPreferencesData = userPreferences.data();
+        setServingSize(userPreferencesData.servingSize);
+        setCuisines(userPreferencesData.cuisines);
+        setIngredients(userPreferencesData.ingredients);
+      }
+    };
+    loadUserPreferences();
+  }, [userId]);
+
+  const handleServingSizeChange = (event) => {
+    setServingSize(parseInt(event.target.value));
+  };
+
+  const handleCuisineChange = (event) => {
+    const cuisine = event.target.value;
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setCuisines([...cuisines, cuisine]);
+    } else {
+      setCuisines(cuisines.filter((c) => c !== cuisine));
+    }
+  };
+
+  const handleIngredientChange = (event) => {
+    const ingredient = event.target.value;
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setIngredients([...ingredients, ingredient]);
+    } else {
+      setIngredients(ingredients.filter((i) => i !== ingredient));
+    }
+  };
+
+  const handleSavePreferences = async () => {
+    // Save the new preferences to Firestore
+    const newPreferences = {
+      servingSize,
+      cuisines,
+      ingredients,
+    };
+    await firestore.collection('preferences').doc(userId).set(newPreferences);
+
+    // Alert the user that their preferences have been saved
+    alert('Your preferences have been saved!');
+  };
+
+  return (
+    <div>
+      <h2>User Preferences</h2>
+      <div>
+        <label>
+          Serving Size:
+          <input type="number" min="1" max="10" value={servingSize} onChange={handleServingSizeChange} />
+        </label>
+      </div>
+      <div>
+        <label>
+          Cuisines:
+          <div>
+            <label>
+              <input type="checkbox" value="Italian" checked={cuisines.includes('Italian')} onChange={handleCuisineChange} />
+              Italian
+            </label>
+            <label>
+              <input type="checkbox" value="Mexican" checked={cuisines.includes('Mexican')} onChange={handleCuisineChange} />
+              Mexican
+            </label>
+            <label>
+              <input type="checkbox" value="Asian" checked={cuisines.includes('Asian')} onChange={handleCuisineChange} />
+              Asian
+            </label>
+          </div>
+        </label>
+      </div>
+      <div>
+        <label>
+          Ingredients:
+          <div>
+            <label>
+              <input type="checkbox" value="Chicken" checked={ingredients.includes('Chicken')} onChange={handleIngredientChange} />
+              Chicken
+            </label>
+            <label>
+              <input type="checkbox" value="Beef" checked={ingredients.includes('Beef')} onChange={handleIngredientChange} />
+              Beef
+            </label>
+            <label>
+              <input type="checkbox" value="Fish" checked={ingredients.includes('Fish')} onChange={handleIngredientChange} />
+          Fish
+        </label>
+        <label>
+          <input type="checkbox" value="Vegetables" checked={ingredients.includes('Vegetables')} onChange={handleIngredientChange} />
+          Vegetables
+        </label>
+        <label>
+          <input type="checkbox" value="Fruits" checked={ingredients.includes('Fruits')} onChange={handleIngredientChange} />
+          Fruits
+        </label>
+      </div>
+    </label>
+  </div>
+  <button onClick={handleSavePreferences}>Save Preferences</button>
+</div>
+);
+};
+
+export default UserPreferences;

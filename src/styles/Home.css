@@ -1,0 +1,127 @@
+.video-container {
+  position: relative;
+}
+
+.video-container video {
+  width: 100%;
+  height: auto;
+}
+
+.text-overlay {
+  position: absolute;
+  top: 36%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  animation: fade-in 1s ease-in-out;
+}
+
+.dish {
+  color: #000000;
+  font-size: 60px;
+  font-weight: 900;
+
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.overlay1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay color */
+}
+
+.filtered-video {
+  filter: brightness(1.2) contrast(1.2); /* Adjust the values as desired */
+}
+
+.cardsHome {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.cardsHome .red {
+  background-color: #f43f5e;
+}
+
+.cardsHome .blue {
+  background-color: #3b82f6;
+}
+
+.cardsHome .green {
+  background-color: #22c55e;
+}
+
+.cardsHome .yellow {
+  background-color: #f3ff0c;
+}
+
+.cardsHome .cardhome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  height: 330px;
+  width: 260px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: 400ms;
+  flex-basis: 18%; /* Adjust as needed */
+  margin-bottom: 20px;
+}
+
+.cardsHome .cardhome p.tip {
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.cardsHome .cardhome p.second-text {
+  font-size: 0.7em;
+}
+
+.cardsHome .cardhome:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.cardsHome:hover > .cardhome:not(:hover) {
+  filter: blur(10px);
+  transform: scale(0.9, 0.9);
+}
+
+@media (max-width: 768px) {
+  .text-overlay {
+    top: 45%;
+    left: 42%;
+  }
+  .cardsHome {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+  }
+  .cardsHome .cardhome {
+    height: 255px;
+    width: 192px;
+  }
+}
