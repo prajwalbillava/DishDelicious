@@ -20,10 +20,12 @@ export function AuthProvider({ children }) {
 
   function signup(email, password) {
     console.log("sign", email, password);
-    return createUserWithEmailAndPassword(auth, email, password);
+    const loginUser = createUserWithEmailAndPassword(auth, email, password);
+    console.log(loginUser.user);
   }
   function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+    const signupUser = signInWithEmailAndPassword(auth, email, password);
+    console.log(signupUser);
   }
   function logout() {
     return signOut(auth);

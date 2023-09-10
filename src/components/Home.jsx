@@ -52,7 +52,7 @@ function Home() {
       <div className="video-container">
         <video
           style={{ height: "10%", width: "100%" }}
-          class="filtered-video"
+          className="filtered-video"
           autoPlay
           loop
           muted

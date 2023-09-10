@@ -26,6 +26,7 @@ import Login1 from "./components/Login1";
 import { ShowContext } from "./Context/ShowContext";
 import { useState } from "react";
 import { AuthProvider } from "./Context/AuthContext";
+import Profile from "./components/Profile";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -51,6 +52,7 @@ function App() {
         <Route path="/login1" element={<Login1 linkComponent={Link} />}></Route>
         <Route path="/signup" element={<SignUp linkComponent={Link} />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
         <Route path="/login" element={<Login linkComponent={Link} />}></Route>
         <Route
           path="/recipesearch"

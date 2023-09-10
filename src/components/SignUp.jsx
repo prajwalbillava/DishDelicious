@@ -26,6 +26,11 @@ function SignUp(props) {
       console.log("log", emailRef.current.value, passwordRef.current.value);
       await signup(emailRef.current.value, passwordRef.current.value);
       navigateTo("/");
+      const userData = {
+        email: emailRef.current.value,
+        name: nameRef.current.value, // You can customize this as needed
+      };
+      firestore.collection('users').doc(user.uid).set(userData);
     } catch (e) {
       console.log(e);
       setError("Failed to create Account");
