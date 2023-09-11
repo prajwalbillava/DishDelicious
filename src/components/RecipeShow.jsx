@@ -41,7 +41,7 @@ function RecipeShow({ recipe1 }) {
     event.preventDefault();
     try {
       const response = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${searchTerm}&maxFat=25&number=21&apiKey=6f9148c7b54c4d57a5806ff1e61c3c0e`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${searchTerm}&maxFat=25&number=21&apiKey=3a2b4a0208294b96a5c298bd4f92eecc`
       );
       setRecipes(response.data.results);
     } catch (error) {

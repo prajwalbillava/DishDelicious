@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import RecipeShow from "./components/RecipeShow";
 import ShowDetail from "./components/ShowDetail";
 import PrivateRoute from "./components/PrivateRoute";
-
+import RecipePDFGenerator from "./components/RecipePDFGenerator";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -28,8 +28,12 @@ import { useState } from "react";
 import { AuthProvider } from "./Context/AuthContext";
 import Profile from "./components/Profile";
 
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 function App() {
   const [recipes, setRecipes] = useState([]);
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route
@@ -59,6 +63,7 @@ function App() {
           element={<RecipeShow linkComponent={Link} />}
         ></Route>
         <Route path="/recipeshow/:id" element={<ShowDetail />}></Route>
+        <Route path="/recipepdf/:id" element={<RecipePDFGenerator />}></Route>
         <Route path="/forgotpass" element={<Forgotpassword />}></Route>
         <Route path="*" element={<Errorpage linkComponent={Link} />} />
       </Route>
@@ -68,11 +73,13 @@ function App() {
   return (
     <div className="App">
       <ErrorBoundry>
-        <ShowContext.Provider value={{ recipes, setRecipes }}>
-          <AuthProvider>
-            <RouterProvider router={router} />
-          </AuthProvider>
-        </ShowContext.Provider>
+        <Provider store={store}>
+          <ShowContext.Provider value={{ recipes, setRecipes }}>
+            <AuthProvider>
+              <RouterProvider router={router} />
+            </AuthProvider>
+          </ShowContext.Provider>
+        </Provider>
       </ErrorBoundry>
     </div>
   );

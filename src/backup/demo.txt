@@ -442,3 +442,144 @@ function MealPlanner({ savedRecipes, user }) {
         ))}
         <h3 className="section-subtitle">Search Results</h3>
         {searchResults.map((recipe,
+
+
+/*import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import {
+  PDFViewer,
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+} from "@react-pdf/renderer";
+import ReactToPdf from "react-to-pdf";
+
+import axios from "axios";
+
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: "column",
+    alignItems: "center",
+    margin: 10,
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+  text: {
+    fontSize: 12,
+  },
+});
+
+const RecipeIngredients = ({ recipe }) => {
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.text}>Recipe Ingredients for {recipe.title}</Text>
+          {recipe?.map((ingredient, index) => (
+            <Text key={index} style={styles.text}>
+              {`${index + 1}. ${ingredient}`}
+            </Text>
+          ))}
+        </View>
+      </Page>
+    </Document>
+  );
+};
+
+function RecipePDFGenerator() {
+  const { id } = useParams();
+  const [currentId, setCurrentId] = useState(id);
+  const [Recipepdf, setRecipePdf] = useState(null);
+  const [pdfData, setPdfData] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleSearchSubmit = async () => {
+    //event.preventDefault();
+    try {
+      const response = await axios.get(
+        `https://api.spoonacular.com/recipes/${currentId}/information?includeNutrition=false&apiKey=6f9148c7b54c4d57a5806ff1e61c3c0e`
+      );
+      console.log(response.data);
+
+      return response;
+      //console.log(Recipepdf);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setRecipePdf(null);
+    handleSearchSubmit()
+      .then((response) => {
+        setRecipePdf(response.data); // Update the state with the resolved data
+      })
+      .catch((error) => {
+        // Handle errors if needed
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log(Recipepdf);
+  }, [Recipepdf]);
+
+  const ref = React.createRef();
+  const handleGeneratePDF = async () => {
+    setIsGenerating(true);
+    if (ref.current) {
+      const pdf = await ref.current.toPdf();
+      setPdfData(pdf);
+    }
+  };
+
+  const handleDownloadPDF = () => {
+    if (pdfData) {
+      const blob = new Blob([pdfData], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${Recipepdf.title}_ingredients.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  return (
+    <>
+      {isLoading ? (
+        <p>Loading PDF...</p>
+      ) : Recipepdf ? (
+        <div>
+          <h3>Selected Recipe</h3>
+          {isGenerating ? (
+            <p>Generating PDF...</p>
+          ) : (
+            <>
+              <ReactToPdf targetRef={ref}>
+                {({ toPdf }) => (
+                  <button onClick={handleGeneratePDF}>Generate PDF</button>
+                )}
+              </ReactToPdf>
+              <button onClick={handleDownloadPDF}>Download PDF</button>
+            </>
+          )}
+          <div ref={ref}>
+            <RecipeIngredients recipe={Recipepdf.extendedIngredients} />
+          </div>
+        </div>
+      ) : (
+        <p>Error loading PDF</p>
+      )}
+    </>
+  );
+}
+
+export default RecipePDFGenerator;*/

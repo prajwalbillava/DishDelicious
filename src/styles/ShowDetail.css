@@ -95,6 +95,9 @@
   border-radius: 5px;
 }*/
 
+.ingri {
+  margin-left: 44px;
+}
 .buttonA {
   font-size: 21px;
   display: inline-block;
@@ -136,6 +139,12 @@
     max-width: none;
   }*/
   .buttonA {
-    width: 120%;
+    font-size: 32px;
+    width: 85%;
+    margin: 20px 0;
+    padding: 0;
+  }
+  .small-box {
+    width: 85%;
   }
 }

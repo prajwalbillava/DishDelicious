@@ -4,6 +4,8 @@ import { getDocs, collection } from "firebase/firestore";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
+import { setUser } from "../redux/userSlice";
+import store from "../redux/store";
 
 function Home() {
   const [name, setname] = useState([]);
@@ -11,12 +13,15 @@ function Home() {
   const nameCollection = collection(db, "auth");
   const { currentUser, logout } = useAuth();
   const navigateTo = useNavigate();
+  const email = currentUser.email;
+  
   useEffect(() => {
     const getNameList = async () => {
       try {
         const data = await getDocs(nameCollection);
         const fildata = data.docs.map;
         console.log(data);
+        store.dispatch(setUser({ email, name1 }));
       } catch (err) {
         console.log(err);
       }
@@ -34,19 +39,7 @@ function Home() {
     }
   }
 
-  function extractNameFromEmail(email) {
-    // Remove all numbers from the email address
-    var nameWithoutNumbers = email.replace(/[0-9]/g, "");
-
-    // Extract the name part before the '@' symbol
-    var name = nameWithoutNumbers.split("@")[0];
-
-    return name;
-  }
-
-  const email = currentUser.email;
-  const name1 = extractNameFromEmail(email);
-
+  
   return (
     <>
       <div className="video-container">
@@ -72,7 +65,7 @@ function Home() {
       </div>
 
       {error && alert(error)}
-      <strong>HII , {name1}</strong>
+      
 
       <h2>Find your perfect meal with our recipe search and planning app</h2>
       <div className="cardsHome">

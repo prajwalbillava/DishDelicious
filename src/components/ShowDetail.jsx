@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { auth, db } from "../Auth/FirebaseAuth";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import axios from "axios";
 import "../styles/ShowDetail.css";
 import SimilarRecipe from "./SimilarRecipe";
+import { Link } from "react-router-dom";
 
 function ShowDetail() {
   const { id } = useParams();
   const [currentId, setCurrentId] = useState(id);
   const [Recipe, setRecipe] = useState(null);
+  const [isSaved, setIsSaved] = useState(false);
   //dotenv.config({ path: "../../.enav" });
+  const linkStyle = {
+    textDecoration: "none", // Example style properties
+    color: "white",
+  };
 
   const handleSearchSubmit = async () => {
     //event.preventDefault();
     try {
       const response = await axios.get(
-        `https://api.spoonacular.com/recipes/${currentId}/information?includeNutrition=false&apiKey=6f9148c7b54c4d57a5806ff1e61c3c0e`
+        `https://api.spoonacular.com/recipes/${currentId}/information?includeNutrition=false&apiKey=3a2b4a0208294b96a5c298bd4f92eecc`
       );
       console.log(response);
       setRecipe(response.data);
@@ -39,10 +46,43 @@ function ShowDetail() {
     handleSearchSubmit();
   }, [id, currentId]);
 
+  const handleSaveRecipe = async () => {
+    try {
+      // Check if a user is currently authenticated
+      const user = auth.currentUser;
+      console.log("user data", user);
+      if (user) {
+        // Get the user's unique ID
+        const userId = user.uid;
+        console.log("User UID:", userId);
+
+        // Reference to Firestore collection for user data
+        const firestore = db();
+        const userDocRef = db.collection("users").doc(userId);
+
+        // Update the user's document with the recipe number
+        await userDocRef.update({
+          savedRecipes: db.FieldValue.arrayUnion(`${currentId}`),
+        });
+
+        setIsSaved(true);
+      } else {
+        // Handle the case when the user is not authenticated
+        // You can show a message or redirect to the login page
+      }
+    } catch (error) {
+      console.error("Error saving recipe:", error);
+    }
+  };
+
   return (
     <>
       <div className="showmain">
-        <h1 style={{ fontSize: "40px", fontWeight: "900" }}>{Recipe?.title}</h1>
+        <h1
+          style={{ fontSize: "40px", fontWeight: "900", margin: "20px auto" }}
+        >
+          {Recipe?.title}
+        </h1>
         <img src={Recipe?.image}></img>
         {/* <p>{Recipe?.instructions}</p>*/}
         {Recipe?.vegetarian ? (
@@ -51,7 +91,7 @@ function ShowDetail() {
           <div className="small-box red">Non-Vegetarian Dish</div>
         )}
         <h2>Ingridients : </h2>
-        <ul>
+        <ul className="ingri">
           {Recipe?.extendedIngredients.map((item) => {
             return (
               <li key={item.id}>
@@ -83,8 +123,14 @@ function ShowDetail() {
         </a>
         <hr />
         <div className="buttonMain">
-          <button className="buttonA">Save Recipe</button>
-          <button className="buttonA">Genrate Shopping List</button>
+          <button className="buttonA" onClick={handleSaveRecipe}>
+            Save Recipe
+          </button>
+          <button className="buttonA">
+            <Link to={`/recipepdf/${currentId}`} style={linkStyle}>
+              Genrate Shopping List
+            </Link>
+          </button>
           <button className="buttonA">Order Ingridients</button>
         </div>
       </div>

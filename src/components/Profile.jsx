@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Profile.css";
+import { useSelector } from "react-redux";
+import { useAuth } from "../Context/AuthContext";
 
 function Profile() {
+  const { currentUser, logout } = useAuth();
+  const user = useSelector((state) => state.user);
+  console.log(user);
+  const { email, username } = user;
+  const name1 = extractNameFromEmail(email);
+
+  function extractNameFromEmail(email) {
+    // Remove all numbers from the email address
+    var nameWithoutNumbers = email.replace(/[0-9]/g, "");
+
+    // Extract the name part before the '@' symbol
+    var name = nameWithoutNumbers.split("@")[0];
+
+    return name;
+  }
+
   return (
     <>
       <div className="content-profile-page">
-        <div className="profile-user-page card">
+        <div className="profile-user-page cardp">
           <div className="img-user-profile">
             <img
               className="profile-bgHome"
@@ -19,33 +37,30 @@ function Profile() {
           </div>
 
           <div className="user-profile-data">
-            <h1>Jose Pino</h1>
-            <p>github.com/jofpin</p>
+            <h1>{name1}</h1>
+            <p>{currentUser.email}</p>
           </div>
           <div className="description-profile">
-            Front-end | Security Researcher | CSS Warrior |{" "}
-            <a href="https://twitter.com/bullgit" title="bullgit">
-              <strong>@bullgit</strong>
-            </a>{" "}
-            | I love to create small things for the internet!
+            Discover new flavors and plan your culinary journey with our recipe
+            search and meal planning app.
           </div>
           <ul className="data-user">
             <li>
               <a>
-                <strong>3390</strong>
-                <span>Posts</span>
+                <strong>0</strong>
+                <span>Saved Recipe</span>
               </a>
             </li>
             <li>
               <a>
-                <strong>718</strong>
-                <span>Followers</span>
+                <strong>0</strong>
+                <span>shopping list</span>
               </a>
             </li>
             <li>
               <a>
-                <strong>239</strong>
-                <span>Following</span>
+                <strong>0</strong>
+                <span>ordered</span>
               </a>
             </li>
           </ul>

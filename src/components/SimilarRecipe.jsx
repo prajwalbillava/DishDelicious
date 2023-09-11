@@ -11,7 +11,7 @@ function SimilarRecipe({ RecipeId }) {
       //event.preventDefault();
       try {
         const response = await axios.get(
-          `https://api.spoonacular.com/recipes/${RecipeId}/similar?includeNutrition=false&apiKey=6f9148c7b54c4d57a5806ff1e61c3c0e`
+          `https://api.spoonacular.com/recipes/${RecipeId}/similar?includeNutrition=false&apiKey=3a2b4a0208294b96a5c298bd4f92eecc`
         );
         console.log("similar", response.data);
         setSimilar(response.data);
