@@ -4,8 +4,8 @@ import { getDocs, collection } from "firebase/firestore";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
-import { setUser } from "../redux/userSlice";
-import store from "../redux/store";
+//import { setUser } from "../redux/userSlice";
+//import store from "../redux/store";
 
 function Home() {
   const [name, setname] = useState([]);
@@ -21,7 +21,7 @@ function Home() {
         const data = await getDocs(nameCollection);
         const fildata = data.docs.map;
         console.log(data);
-        store.dispatch(setUser({ email, name1 }));
+        //store.dispatch(setUser({ email, name1 }));
       } catch (err) {
         console.log(err);
       }

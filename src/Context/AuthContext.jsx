@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { auth,db } from "../Auth/FirebaseAuth";
+import { auth, db } from "../Auth/FirebaseAuth";
 import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signOut,
 } from "firebase/auth";
 
@@ -22,12 +21,12 @@ export function AuthProvider({ children }) {
   function signup(email, password) {
     console.log("sign", email, password);
     const loginUser = createUserWithEmailAndPassword(auth, email, password);
-    console.log(loginUser);
+    console.log("signupUser", loginUser.user);
   }
   function login(email, password) {
     const signupUser = signInWithEmailAndPassword(auth, email, password);
 
-    console.log(signupUser);
+    console.log("loginuser", signupUser.user);
   }
   function logout() {
     return signOut(auth);

@@ -2,6 +2,11 @@ import React, { useRef, useState } from "react";
 import "../styles/SignUp.css";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { auth, db } from "../Auth/FirebaseAuth";
+import {
+  createUserDocument,
+  createFirestoreDocument,
+} from "../firebase/collection";
 
 function SignUp(props) {
   const nameRef = useRef();
@@ -24,13 +29,27 @@ function SignUp(props) {
       setError("");
       setLoading(true);
       console.log("log", emailRef.current.value, passwordRef.current.value);
+      const emailf = emailRef.current.value;
+      const namef = nameRef.current.value;
       await signup(emailRef.current.value, passwordRef.current.value);
-      navigateTo("/");
-      const userData = {
-        email: emailRef.current.value,
-        name: nameRef.current.value, // You can customize this as needed
-      };
-      firestore.collection('users').doc(user.uid).set(userData);
+      console.log("firesign:", auth.currentUser);
+      const user = auth.currentUser;
+      if (user) {
+        // Access the user's information
+        setTimeout(() => {
+          console.log("firesignuid:", user.uid);
+          const uid = user.uid;
+
+          // Continue with creating user documents or other actions that require the user's UID
+          createUserDocument(uid, emailf, namef);
+          //createFirestoreDocument();
+        }, 15000);
+
+        // Redirect or navigate after everything is done
+        navigateTo("/");
+      } else {
+        setError("Failed to create Account");
+      }
     } catch (e) {
       console.log(e);
       setError("Failed to create Account");

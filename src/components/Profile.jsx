@@ -1,14 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Profile.css";
 import { useSelector } from "react-redux";
 import { useAuth } from "../Context/AuthContext";
+import { userDetail } from "../firebase/collection";
 
 function Profile() {
-  const { currentUser, logout } = useAuth();
+  //const { currentUser, logout } = useAuth();
+  const [email1, setemail1] = useState("");
+  const [name1, setname1] = useState("");
+  const [count1, setcount1] = useState(0);
   const user = useSelector((state) => state.user);
   console.log(user);
-  const { email, username } = user;
-  const name1 = extractNameFromEmail(email);
+  //const { email, username } = user;
+  //const name1 = extractNameFromEmail(email);
+
+  useEffect(() => {
+    userDetail()
+      .then((userData) => {
+        if (userData) {
+          const { name, email, savedRecipes } = userData;
+          console.log("User's Name:", name);
+          console.log("User's Email:", email);
+          console.log("User's Ecount:", savedRecipes);
+          setemail1(email);
+          setname1(name);
+          setcount1(savedRecipes);
+        } else {
+          console.log("User data not found.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
 
   function extractNameFromEmail(email) {
     // Remove all numbers from the email address
@@ -38,7 +62,7 @@ function Profile() {
 
           <div className="user-profile-data">
             <h1>{name1}</h1>
-            <p>{currentUser.email}</p>
+            <p>{email1}</p>
           </div>
           <div className="description-profile">
             Discover new flavors and plan your culinary journey with our recipe
@@ -47,7 +71,7 @@ function Profile() {
           <ul className="data-user">
             <li>
               <a>
-                <strong>0</strong>
+                <strong>{count1}</strong>
                 <span>Saved Recipe</span>
               </a>
             </li>

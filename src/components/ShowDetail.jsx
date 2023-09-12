@@ -1,7 +1,15 @@
 import React, { useEffect, useId, useState } from "react";
 import { useParams } from "react-router-dom";
 import { auth, db } from "../Auth/FirebaseAuth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+  arrayUnion,
+  setDoc,
+} from "firebase/firestore";
 import axios from "axios";
 import "../styles/ShowDetail.css";
 import SimilarRecipe from "./SimilarRecipe";
@@ -57,12 +65,12 @@ function ShowDetail() {
         console.log("User UID:", userId);
 
         // Reference to Firestore collection for user data
-        const firestore = db();
-        const userDocRef = db.collection("users").doc(userId);
+        const firestore = db;
+        const userDocRef = doc(db, "users", userId);
 
         // Update the user's document with the recipe number
-        await userDocRef.update({
-          savedRecipes: db.FieldValue.arrayUnion(`${currentId}`),
+        await updateDoc(userDocRef, {
+          savedRecipes: arrayUnion(`${currentId}`),
         });
 
         setIsSaved(true);
