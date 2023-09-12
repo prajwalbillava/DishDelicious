@@ -115,7 +115,7 @@ function Navbar1() {
               </ul>
             </div>
             <label htmlFor="show-search" className="search-icon">
-              <Link to="/profile">
+              <Link to="/profile" className="profileman">
                 <i className="fas fa-user"></i>
               </Link>
             </label>

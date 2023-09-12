@@ -92,7 +92,7 @@ function Contact() {
       </section>
       {showPopup && (
         <>
-          <div id="overlay" className="overlay1"></div>
+          <div id="overlay" className="overlay3"></div>
           <div className="popup">
             <h2>Email Sent Successfully</h2>
             <p>Your email has been sent successfully.</p>

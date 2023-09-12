@@ -14,12 +14,14 @@ import axios from "axios";
 import "../styles/ShowDetail.css";
 import SimilarRecipe from "./SimilarRecipe";
 import { Link } from "react-router-dom";
+import { getRandomAPIKey } from "../Context/getRandom";
 
 function ShowDetail() {
   const { id } = useParams();
   const [currentId, setCurrentId] = useState(id);
   const [Recipe, setRecipe] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
+  const apik1 = getRandomAPIKey();
   //dotenv.config({ path: "../../.enav" });
   const linkStyle = {
     textDecoration: "none", // Example style properties
@@ -30,7 +32,7 @@ function ShowDetail() {
     //event.preventDefault();
     try {
       const response = await axios.get(
-        `https://api.spoonacular.com/recipes/${currentId}/information?includeNutrition=false&apiKey=3a2b4a0208294b96a5c298bd4f92eecc`
+        `https://api.spoonacular.com/recipes/${currentId}/information?includeNutrition=false&apiKey=${apik1}`
       );
       console.log(response);
       setRecipe(response.data);

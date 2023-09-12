@@ -4,7 +4,7 @@ import axios from "axios";
 import { pdfjs } from "react-pdf"; // Import PDF-related components
 import { saveAs } from "file-saver";
 import "../styles/RecipePDFGenerator.css";
-
+import { getRandomAPIKey } from "../Context/getRandom";
 import { Document, Page, Text, View, PDFViewer } from "@react-pdf/renderer";
 
 // Configure PDF.js worker for react-pdf
@@ -14,6 +14,7 @@ function RecipePDFGenerator() {
   const [ingredients, setIngredients] = useState([]);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const apik1 = getRandomAPIKey();
   const { id } = useParams();
   const styles = {
     page: {
@@ -38,7 +39,7 @@ function RecipePDFGenerator() {
     const fetchIngredients = async () => {
       try {
         const response = await axios.get(
-          `https://api.spoonacular.com/recipes/${id}/ingredientWidget.json?apiKey=3a2b4a0208294b96a5c298bd4f92eecc`
+          `https://api.spoonacular.com/recipes/${id}/ingredientWidget.json?apiKey=${apik1}`
         );
         setIngredients(response.data.ingredients);
       } catch (error) {
@@ -116,7 +117,9 @@ function RecipePDFGenerator() {
           </p>
         </div>
       ) : (
-        <div className="loaderpdf"><div class="custom-loader"></div></div>
+        <div className="loaderpdf">
+          <div class="custom-loader"></div>
+        </div>
       )}
     </div>
   );

@@ -5,13 +5,14 @@ import "../styles/Recipeshow.css";
 import axios from "axios";
 import ShowDetail from "./ShowDetail";
 import { Link } from "react-router-dom";
+import { getRandomAPIKey } from "../Context/getRandom";
 
 function RecipeShow({ recipe1 }) {
   //const recipe = recipe1;
   const { recipes, setRecipes } = useContext(ShowContext);
 
   const [searchTerm, setSearchTerm] = useState("");
-
+  const apik1 = getRandomAPIKey();
   const [clickID, setclickID] = useState(0);
   const [showDetail, setshowDetail] = useState(false);
 
@@ -41,7 +42,7 @@ function RecipeShow({ recipe1 }) {
     event.preventDefault();
     try {
       const response = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${searchTerm}&maxFat=25&number=21&apiKey=3a2b4a0208294b96a5c298bd4f92eecc`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${searchTerm}&maxFat=25&number=21&apiKey=${apik1}`
       );
       setRecipes(response.data.results);
     } catch (error) {

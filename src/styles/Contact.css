@@ -52,6 +52,7 @@
   max-width: 100%;
   filter: invert(83%);
   opacity: 0.5;
+  border-radius: 50%;
 }
 .container1 .contactinfo .info li span:nth-child(2) {
   color: #fff;
@@ -245,7 +246,7 @@
   cursor: pointer;
 }
 /* Add overlay styles */
-.overlay1 {
+.overlay3 {
   position: fixed;
   top: 0;
   left: 0;
