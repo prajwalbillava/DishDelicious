@@ -129,3 +129,10 @@
 .profile-user-page .data-user li a:hover span {
   color: #3498db;
 }
+
+@media screen and (max-width: 700px) {
+  .content-profile-page {
+    margin: 1em auto;
+    width: 21.23em;
+  }
+}

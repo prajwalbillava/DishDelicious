@@ -82,6 +82,9 @@ function ShowDetail() {
       console.error("Error saving recipe:", error);
     }
   };
+  function handleHidePopup() {
+    setIsSaved(false);
+  }
 
   return (
     <>
@@ -144,6 +147,18 @@ function ShowDetail() {
       </div>
       <h3>Similar Recipes</h3>
       <SimilarRecipe RecipeId={id} />
+      {isSaved && (
+        <>
+          <div id="overlay" className="overlay2"></div>
+          <div className="popup">
+            <h2>Recipe Saved Successfully</h2>
+            <p>You can check saved recipe in profile</p>
+            <span className="close" onClick={handleHidePopup}>
+              &times;
+            </span>
+          </div>
+        </>
+      )}
     </>
   );
 }
