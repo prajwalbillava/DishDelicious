@@ -27,6 +27,7 @@ import { ShowContext } from "./Context/ShowContext";
 import { useState } from "react";
 import { AuthProvider } from "./Context/AuthContext";
 import Profile from "./components/Profile";
+import SavedRecipe from "./components/SavedRecipe";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -65,6 +66,7 @@ function App() {
         <Route path="/recipeshow/:id" element={<ShowDetail />}></Route>
         <Route path="/recipepdf/:id" element={<RecipePDFGenerator />}></Route>
         <Route path="/forgotpass" element={<Forgotpassword />}></Route>
+        <Route path="/savedrecipe" element={<SavedRecipe />}></Route>
         <Route path="*" element={<Errorpage linkComponent={Link} />} />
       </Route>
     )

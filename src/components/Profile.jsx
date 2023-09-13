@@ -3,6 +3,7 @@ import "../styles/Profile.css";
 import { useSelector } from "react-redux";
 import { useAuth } from "../Context/AuthContext";
 import { userDetail } from "../firebase/collection";
+import { Link } from "react-router-dom";
 
 function Profile() {
   //const { currentUser, logout } = useAuth();
@@ -72,7 +73,10 @@ function Profile() {
             <li>
               <a>
                 <strong>{count1}</strong>
-                <span>Saved Recipe</span>
+
+                <Link to="/savedrecipe">
+                  <span>Saved Recipe</span>
+                </Link>
               </a>
             </li>
             <li>

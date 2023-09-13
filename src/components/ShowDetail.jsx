@@ -109,11 +109,14 @@ function ShowDetail() {
             return (
               <li key={item.id}>
                 <h4 style={{ fontSize: "30px", fontWeight: "900" }}>
-                  {item.name}
+                  {item.original}
                 </h4>
                 <div style={{ display: "flex", fontSize: "20px" }}>
                   Quantity :
-                  <h3 style={{ fontSize: "20px" }}>{item.original}</h3>
+                  <h3 style={{ fontSize: "20px" }}>
+                    {item?.measures?.metric?.amount}
+                    {item?.measures?.metric?.unitShort}
+                  </h3>
                 </div>
               </li>
             );
