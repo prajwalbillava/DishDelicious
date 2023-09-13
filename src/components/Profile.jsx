@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useAuth } from "../Context/AuthContext";
 import { userDetail } from "../firebase/collection";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   //const { currentUser, logout } = useAuth();
@@ -11,6 +12,9 @@ function Profile() {
   const [name1, setname1] = useState("");
   const [count1, setcount1] = useState(0);
   const user = useSelector((state) => state.user);
+  const [error, setError] = useState("");
+  const { logout } = useAuth();
+  const navigateTo = useNavigate();
   console.log(user);
   //const { email, username } = user;
   //const name1 = extractNameFromEmail(email);
@@ -44,6 +48,15 @@ function Profile() {
 
     return name;
   }
+  async function handleLogout() {
+    setError("");
+    try {
+      await logout();
+      navigateTo("/login1");
+    } catch {
+      setError("Failed to logout");
+    }
+  }
 
   return (
     <>
@@ -71,13 +84,11 @@ function Profile() {
           </div>
           <ul className="data-user">
             <li>
-              <a>
+              <Link to="/savedrecipe">
                 <strong>{count1}</strong>
 
-                <Link to="/savedrecipe">
-                  <span>Saved Recipe</span>
-                </Link>
-              </a>
+                <span>Saved Recipe</span>
+              </Link>
             </li>
             <li>
               <a>
@@ -92,6 +103,9 @@ function Profile() {
               </a>
             </li>
           </ul>
+          <button onClick={handleLogout} className="profilebutton">
+            Logout
+          </button>
         </div>
       </div>
     </>

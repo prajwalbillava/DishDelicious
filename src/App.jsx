@@ -4,7 +4,7 @@ import "./App.css";
 import Navbar1 from "./components/Navbar1";
 import Contact from "./components/Contact";
 import Home from "./components/Home";
-import Login from "./components/Login";
+//import Login from "./components/Login";
 import Footer from "./components/Footer";
 import RecipeShow from "./components/RecipeShow";
 import ShowDetail from "./components/ShowDetail";
@@ -58,7 +58,7 @@ function App() {
         <Route path="/signup" element={<SignUp linkComponent={Link} />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/login" element={<Login linkComponent={Link} />}></Route>
+
         <Route
           path="/recipesearch"
           element={<RecipeShow linkComponent={Link} />}

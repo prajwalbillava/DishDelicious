@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../Auth/FirebaseAuth";
 import { getDocs, collection } from "firebase/firestore";
 import { useAuth } from "../Context/AuthContext";
-import { useNavigate } from "react-router-dom";
+
 import "../styles/Home.css";
 //import { setUser } from "../redux/userSlice";
 //import store from "../redux/store";
@@ -11,10 +11,10 @@ function Home() {
   const [name, setname] = useState([]);
   const [error, setError] = useState("");
   const nameCollection = collection(db, "auth");
-  const { currentUser, logout } = useAuth();
-  const navigateTo = useNavigate();
-  const email = currentUser.email;
+  const { currentUser } = useAuth();
   
+  const email = currentUser.email;
+
   useEffect(() => {
     const getNameList = async () => {
       try {
@@ -29,17 +29,8 @@ function Home() {
     getNameList();
   }, []);
 
-  async function handleLogout() {
-    setError("");
-    try {
-      await logout();
-      navigateTo("/login1");
-    } catch {
-      setError("Failed to logout");
-    }
-  }
-
   
+
   return (
     <>
       <div className="video-container">
@@ -65,7 +56,6 @@ function Home() {
       </div>
 
       {error && alert(error)}
-      
 
       <h2>Find your perfect meal with our recipe search and planning app</h2>
       <div className="cardsHome">
@@ -87,9 +77,7 @@ function Home() {
         </div>
       </div>
 
-      <button onClick={handleLogout} className="loginbutton">
-        Logout
-      </button>
+      
     </>
   );
 }

@@ -72,7 +72,7 @@ function SavedRecipe() {
                   <h5>Time To Prepare : {recipe.readyInMinutes}Minutes</h5>
 
                   <Link to={`/recipeshow/${recipe.id.toString()}`} id="seemore">
-                    <button>
+                    <button className="savebutton">
                       <div className="svg-wrapper-1">
                         <div className="svg-wrapper">
                           <svg
