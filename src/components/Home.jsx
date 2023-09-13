@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { db } from "../Auth/FirebaseAuth";
 import { getDocs, collection } from "firebase/firestore";
 import { useAuth } from "../Context/AuthContext";
+import "../styles/HomeCard.css";
+import HomeCard from "./HomeCard";
 
 import "../styles/Home.css";
 //import { setUser } from "../redux/userSlice";
@@ -12,7 +14,7 @@ function Home() {
   const [error, setError] = useState("");
   const nameCollection = collection(db, "auth");
   const { currentUser } = useAuth();
-  
+
   const email = currentUser.email;
 
   useEffect(() => {
@@ -29,21 +31,10 @@ function Home() {
     getNameList();
   }, []);
 
-  
-
   return (
     <>
       <div className="video-container">
-        <video
-          style={{ height: "10%", width: "100%" }}
-          className="filtered-video"
-          autoPlay
-          loop
-          muted
-        >
-          <source src="src\assets\homepagevideo.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <img src={"src/assets/homeimage.avif"} className="faded-image"></img>
 
         <div className="titlemain text-overlay">
           <h1 style={{ marginTop: "10px" }} className="dish">
@@ -57,8 +48,35 @@ function Home() {
 
       {error && alert(error)}
 
-      <h2>Find your perfect meal with our recipe search and planning app</h2>
-      <div className="cardsHome">
+      <div class="wrapper1">
+        <h2 className="h2home">
+          Find your perfect meal with our recipe search and planning app
+        </h2>
+        <div class="containerh">
+          <h1 class="title">Our Services</h1>
+          <div class="inner-wrapper">
+            <HomeCard
+              id={1}
+              title={"Search Recipe"}
+              imgUrl={""}
+              btntext={"Search Recipe"}
+            />
+            <HomeCard
+              id={2}
+              title={"Save Recipe"}
+              imgUrl={""}
+              btntext={"Saved Recipes"}
+            />
+            <HomeCard
+              id={3}
+              title={"Genrate Shopping List"}
+              imgUrl={""}
+              btntext={"Genrate Shopping List"}
+            />
+          </div>
+        </div>
+      </div>
+      {/*<div className="cardsHome">
         <div className="cardhome red">
           <p className="tip">Hover Me</p>
           <p className="second-text">Lorem Ipsum</p>
@@ -75,9 +93,7 @@ function Home() {
           <p className="tip">Hover Me</p>
           <p className="second-text">Lorem Ipsum</p>
         </div>
-      </div>
-
-      
+  </div>*/}
     </>
   );
 }
