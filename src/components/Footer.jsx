@@ -27,30 +27,22 @@ function Footer() {
               <h6>Categories</h6>
               <ul className="footer-links">
                 <li>
-                  <a href="http://scanfcode.com/category/c-language/">C</a>
+                  <a href="">C</a>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/front-end-development/">
-                    UI Design
-                  </a>
+                  <a href="">UI Design</a>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/back-end-development/">
-                    PHP
-                  </a>
+                  <a href="">PHP</a>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/java-programming-language/">
-                    Java
-                  </a>
+                  <a href="">Java</a>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/android/">Android</a>
+                  <a href="">Android</a>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/templates/">
-                    Templates
-                  </a>
+                  <a href="">Templates</a>
                 </li>
               </ul>
             </div>
@@ -59,23 +51,19 @@ function Footer() {
               <h6>Quick Links</h6>
               <ul className="footer-links">
                 <li>
-                  <a href="http://scanfcode.com/about/">About Us</a>
+                  <a href="">About Us</a>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/contact/">Contact Us</a>
+                  <a href="">Contact Us</a>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/contribute-at-scanfcode/">
-                    Contribute
-                  </a>
+                  <a href="">Contribute</a>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/privacy-policy/">
-                    Privacy Policy
-                  </a>
+                  <a href="">Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/sitemap/">Sitemap</a>
+                  <a href="">Sitemap</a>
                 </li>
               </ul>
             </div>
