@@ -34,7 +34,10 @@ function Home() {
   return (
     <>
       <div className="video-container">
-        <img src={"public/homeimage.jpg"} className="faded-image"></img>
+        <img
+          src="https://i.ibb.co/mJnpw1J/homeimage.jpg"
+          className="faded-image"
+        ></img>
 
         <div className="titlemain text-overlay">
           <h1 style={{ marginTop: "10px" }} className="dish">
