@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/Footer.css";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -24,25 +25,27 @@ function Footer() {
             </div>
 
             <div className="col-xs-6 col-md-3">
-              <h6>Categories</h6>
+              <h6>Services</h6>
               <ul className="footer-links">
                 <li>
-                  <a href="">C</a>
+                  <a href="">
+                    <Link to="/recipesearch">Search Recipe</Link>
+                  </a>
                 </li>
                 <li>
-                  <a href="">UI Design</a>
+                  <a href="">
+                    <Link to="/savedrecipe">Save Recipe</Link>
+                  </a>
                 </li>
                 <li>
-                  <a href="">PHP</a>
+                  <a href="">
+                    <Link to="/recipesearch">Genrate Shopping List</Link>
+                  </a>
                 </li>
                 <li>
-                  <a href="">Java</a>
-                </li>
-                <li>
-                  <a href="">Android</a>
-                </li>
-                <li>
-                  <a href="">Templates</a>
+                  <a href="">
+                    <Link to="/recipesearch">Order Ingridients</Link>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -51,19 +54,29 @@ function Footer() {
               <h6>Quick Links</h6>
               <ul className="footer-links">
                 <li>
-                  <a href="">About Us</a>
+                  <a href="">
+                    <Link to="/">Home</Link>
+                  </a>
                 </li>
                 <li>
-                  <a href="">Contact Us</a>
+                  <a href="">
+                    <Link to="/contact">contact Us</Link>
+                  </a>
                 </li>
                 <li>
-                  <a href="">Contribute</a>
+                  <a href="">
+                    <Link to="/profile">Profile</Link>
+                  </a>
                 </li>
                 <li>
-                  <a href="">Privacy Policy</a>
+                  <a href="">
+                    <Link to="/login1">Login</Link>
+                  </a>
                 </li>
                 <li>
-                  <a href="">Sitemap</a>
+                  <a href="">
+                    <Link to="/signup">SignUp</Link>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -92,12 +105,20 @@ function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a className="dribbble" href="#">
-                    <i className="fa fa-dribbble"></i>
+                  <a
+                    className="dribbble"
+                    href="https://github.com/prajwalbillava"
+                    target="_blank"
+                  >
+                    <i className="fa fa-github"></i>
                   </a>
                 </li>
                 <li>
-                  <a className="linkedin" href="#">
+                  <a
+                    className="linkedin"
+                    href="https://www.linkedin.com/in/prajwalbirwaz/"
+                    target="_blank"
+                  >
                     <i className="fa fa-linkedin"></i>
                   </a>
                 </li>

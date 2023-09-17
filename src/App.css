@@ -4,9 +4,9 @@
   height: 0;
   background-color: transparent;
 }
-/** {
+* {
   outline: 3px solid limegreen !important;
-}*/
+}
 .outlet {
   margin-top: 71px;
 }
@@ -25,7 +25,7 @@
   padding: 0px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 35vw;
+  margin-top: 45vw;
   margin-bottom: 30px;
   position: relative;
 }

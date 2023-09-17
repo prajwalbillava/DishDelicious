@@ -220,7 +220,8 @@
 
 @media (max-width: 450px) {
   .maintitle {
-    top: 30%;
+    width: 277px;
+    top: 25%;
     left: 40%;
   }
   .waviy {
