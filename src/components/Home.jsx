@@ -82,9 +82,9 @@ function Home() {
           <span>search </span>
           <span>app.</span>
         </h1>
-        <div class="containerh">
-          <h1 class="title">Our Services</h1>
-          <div class="inner-wrapper">
+        <div className="containerh">
+          <h1 className="title">Our Services</h1>
+          <div className="inner-wrapper">
             <HomeCard
               id={1}
               title={"Search Recipe"}
