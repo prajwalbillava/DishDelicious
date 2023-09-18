@@ -44,6 +44,7 @@ const RecipePDFGenerator = lazy(() =>
   import("./components/RecipePDFGenerator")
 );
 const RecipeShow = lazy(() => import("./components/RecipeShow"));
+const OrderIngri = lazy(() => import("./components/OrderIngri"));
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -90,6 +91,7 @@ function App() {
         ></Route>
         <Route path="/recipeshow/:id" element={<ShowDetail />}></Route>
         <Route path="/recipepdf/:id" element={<RecipePDFGenerator />}></Route>
+        <Route path="/orderingri/:id" element={<OrderIngri />}></Route>
         <Route path="/forgotpass" element={<Forgotpassword />}></Route>
         <Route path="/savedrecipe" element={<SavedRecipe />}></Route>
         <Route path="*" element={<Errorpage linkComponent={Link} />} />

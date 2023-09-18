@@ -43,6 +43,7 @@ img {
   list-style: none;
   margin: 0;
   padding: 0;
+  justify-content: center;
 }
 
 .cards_item {
@@ -62,7 +63,7 @@ img {
   }
 }
 
-.card {
+.cardR {
   background-color: white;
   border-radius: 0.25rem;
   box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
@@ -84,7 +85,9 @@ img {
   text-transform: capitalize;
   margin: 0px;
 }
-
+.card_InsideImage {
+  width: 100%;
+}
 .card_text {
   color: #ffffff;
   font-size: 0.875rem;

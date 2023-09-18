@@ -147,7 +147,11 @@ function ShowDetail() {
               Genrate Shopping List
             </Link>
           </button>
-          <button className="buttonA">Order Ingridients</button>
+          <button className="buttonA">
+            <Link to={`/orderingri/${id}`} style={linkStyle}>
+              Order Ingridients
+            </Link>
+          </button>
         </div>
       </div>
       <h3>Similar Recipes</h3>

@@ -72,9 +72,9 @@ function RecipeShow({ recipe1 }) {
             {recipes &&
               recipes?.map((recipe) => (
                 <li className="cards_item" key={recipe.id}>
-                  <div className="card">
+                  <div className="cardR">
                     <div className="card_image">
-                      <img src={recipe.image} alt="Recipe Image" />
+                      <img src={recipe.image} alt="Recipe Image" className="card_InsideImage"/>
                     </div>
                     <div className="card_content">
                       <h2 className="card_title">{recipe.title}</h2>
