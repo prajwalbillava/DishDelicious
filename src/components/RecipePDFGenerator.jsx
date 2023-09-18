@@ -94,7 +94,8 @@ function RecipePDFGenerator() {
           </ul>
 
           {/* PDF viewer */}
-          <PDFViewer width={600} height={400}>
+
+          <PDFViewer width={600} height={400} className="iframe-container">
             <Document>
               <Page size="A4">
                 <View style={styles.page}>
@@ -112,6 +113,7 @@ function RecipePDFGenerator() {
               </Page>
             </Document>
           </PDFViewer>
+
           <p>
             Page {pageNumber} of {numPages}
           </p>

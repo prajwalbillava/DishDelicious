@@ -3,12 +3,18 @@ import { getRandomAPIKey } from "../Context/getRandom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/order.css";
+import "../styles/ShowDetail.css";
+import PlaceOrder from "./PlaceOrder";
+
 function OrderIngri() {
   const [ingriDetail, setingriDetail] = useState(null);
   const [ingridients, setIngridients] = useState([]);
   const [total, setTotal] = useState(0);
   const apik1 = getRandomAPIKey();
   const { id } = useParams();
+  const [showNext, setShowNext] = useState(true);
+  const [selected, setSeelected] = useState([]);
+  const [grandTotal, setgrandtotal] = useState(0);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   const handleIngredientSelect = (ingredientli) => {
@@ -60,41 +66,55 @@ function OrderIngri() {
     }));
   }, [selectedIngredients]);*/
 
+  function handleClick() {
+    setSeelected(selectedIngredients);
+    setgrandtotal(total);
+    setShowNext(false);
+  }
+
   return (
     <>
-      <div className="ordermain">
-        <h2>Ingredients List</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th style={{ textAlign: "right" }}>Price</th>
-              <th style={{ textAlign: "right" }}>Select</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ingridients?.map((ingredient, index) => (
-              <tr key={index}>
-                <td>{ingredient?.name}</td>
-                <td style={{ textAlign: "right" }} s>
-                  ${ingredient?.price.toFixed(2)}
-                </td>
-                <td style={{ textAlign: "right" }}>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleIngredientSelect(ingredient)}
-                    checked={selectedIngredients.includes(ingredient)}
-                  />
-                </td>
+      {showNext ? (
+        <div className="ordermain">
+          <h2>Select Ingredients</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th style={{ textAlign: "right" }}>Price</th>
+                <th style={{ textAlign: "right" }}>Select</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <p>Total Cost: ${total}</p>
-        <p>
-          Total Cost Per Serving: ${ingriDetail?.totalCostPerServing.toFixed(2)}
-        </p>
-      </div>
+            </thead>
+            <tbody>
+              {ingridients?.map((ingredient, index) => (
+                <tr key={index}>
+                  <td>{ingredient?.name}</td>
+                  <td style={{ textAlign: "right" }} s>
+                    ${ingredient?.price.toFixed(2)}
+                  </td>
+                  <td style={{ textAlign: "right" }}>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleIngredientSelect(ingredient)}
+                      checked={selectedIngredients.includes(ingredient)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p>Total Cost: ${total}</p>
+          <p>
+            Total Cost Per Serving: $
+            {ingriDetail?.totalCostPerServing.toFixed(2)}
+          </p>
+          <button className="buttonA" onClick={handleClick}>
+            Order
+          </button>
+        </div>
+      ) : (
+        <PlaceOrder selected={selected} total={grandTotal} />
+      )}
     </>
   );
 }

@@ -39,3 +39,9 @@
     transform: rotate(0.5turn);
   }
 }
+
+.iframe-container {
+  width: 100%; /* Set a default width of 100% */
+  max-width: 800px; /* Set a maximum width if needed */
+  height: 400px; /* Set a default height */
+}
