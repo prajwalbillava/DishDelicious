@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ShowContext } from "../Context/ShowContext";
 import "../styles/Recipeshow.css";
 import axios from "axios";
-import ShowDetail from "./ShowDetail";
+
 import { Link } from "react-router-dom";
 import { getRandomAPIKey } from "../Context/getRandom";
 
@@ -19,19 +19,7 @@ function RecipeShow({ recipe1 }) {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-  {
-    /*useEffect(() => {
-    setRecipes(recipe1);
-  }, []);*/
-  }
-
-  /*const itemClick = (id) => {
-    setclickID(id);
-    setshowDetail(true);
-  };*/
-  /*useEffect(() => {
-    setshowDetail(true);
-  }, [clickID]);*/
+  
 
   const handleClick = (id) => {
     setclickID(id);
@@ -52,7 +40,7 @@ function RecipeShow({ recipe1 }) {
   };
   return (
     <>
-      {/*!showDetail ? (*/}
+      
       <>
         <div className="main">
           <form className="head" onSubmit={handleSearchSubmit}>
@@ -94,9 +82,7 @@ function RecipeShow({ recipe1 }) {
           </ul>
         </div>
       </>
-      {/*} ) : (
-        <ShowDetail ItemId={clickID} />
-     )*/}
+      
     </>
   );
 }

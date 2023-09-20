@@ -1,31 +1,30 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 
-function ErrorBoundry(props) {
-  const [hasError, setHasError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleReset = () => {
-    setHasError(false);
-    setErrorMessage("");
-  };
-
-  const handleError = (error, errorInfo) => {
-    setHasError(true);
-    setErrorMessage(error.message || "Something went wrong.");
-    console.error(error, errorInfo);
-  };
-
-  if (hasError) {
-    return (
-      <div>
-        <h2>Something went wrong.</h2>
-        <p>{errorMessage}</p>
-        <button onClick={handleReset}>Reset</button>
-      </div>
-    );
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
   }
 
-  return props.children;
+  componentDidCatch(error, errorInfo) {
+    // You can log the error to an error tracking service here
+    console.error(error, errorInfo);
+    this.setState({ hasError: true });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can customize the error message or UI here
+      return (
+        <div>
+          <h1>Something went wrong</h1>
+          <p>We apologize for the inconvenience. Please try again later.</p>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
 }
 
-export default ErrorBoundry;
+export default ErrorBoundary;

@@ -10,7 +10,7 @@ function SimilarRecipe({ RecipeId }) {
   useEffect(() => {
     console.log("info page running");
     const handleSearchSubmit = async () => {
-      //event.preventDefault();
+      
       try {
         const response = await axios.get(
           `https://api.spoonacular.com/recipes/${RecipeId}/similar?includeNutrition=false&apiKey=${apik1}`

@@ -25,7 +25,7 @@ function OrderIngri() {
         return [...prevSelectedIngredients, ingredientli];
       }
     });
-    console.log("select", selectedIngredients);
+    //console.log("select", selectedIngredients);
     setTotal(calculateTotalCost());
   };
 
@@ -57,14 +57,7 @@ function OrderIngri() {
     ingridetail();
   }, []);
 
-  /*useEffect(() => {
-    const totalCost = calculateTotalCost();
-    // Update the state variable with the calculated total cost
-    setingriDetail((prevData) => ({
-      ...prevData,
-      totalCost,
-    }));
-  }, [selectedIngredients]);*/
+  
 
   function handleClick() {
     setSeelected(selectedIngredients);

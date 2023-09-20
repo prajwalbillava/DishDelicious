@@ -20,7 +20,7 @@ function Contact() {
         (result) => {
           setShowPopup(true);
           form.current.reset();
-          console.log(result);
+          //console.log(result);
         },
         (error) => {
           console.log(error.text);
@@ -45,8 +45,9 @@ function Contact() {
                   </span>
                   <span>
                     1-4/1 , Near Circle <br />
-                    Moodubidri <br />
-                    Manglore
+                    Bantwal Tq , Manglore
+                    <br />
+                    karnataka
                   </span>
                 </li>
                 <li>

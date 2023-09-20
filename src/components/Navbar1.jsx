@@ -1,33 +1,11 @@
 import React, { useState } from "react";
 import "../styles/Navbar1.css";
 
-import { Link, Outlet } from "react-router-dom";
-import RecipeShow from "./RecipeShow";
+import { Link } from "react-router-dom";
+
 import axios from "axios";
 
 function Navbar1() {
-  const [showComponent, setShowComponent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [recipes, setRecipes] = useState([]);
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  //https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=5beaafeb&app_key=d9a466ac0ebd5e8176a5a7b03a844bca
-  const handleSearchSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${searchTerm}&maxFat=25&number=21&apiKey=6f9148c7b54c4d57a5806ff1e61c3c0e`
-      );
-      setRecipes(response.data.results);
-      console.log(response);
-      setShowComponent(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <>
       <div className="navflex">
@@ -81,7 +59,7 @@ function Navbar1() {
                       <Link to="/recipesearch">Search Recipe</Link>
                     </li>
                     <li>
-                      <a href="#">Drop Menu 2</a>
+                      <Link to="/savedrecipe">Saved Recipes</Link>
                     </li>
                     <li>
                       <a href="#">Drop Menu 3</a>
@@ -114,14 +92,12 @@ function Navbar1() {
                 </li>
               </ul>
             </div>
-            <label htmlFor="show-search" className="search-icon">
-              <Link to="/profile" className="profileman">
-                <i className="fas fa-user"></i>
-              </Link>
-            </label>
+
+            <Link to="/profile" className="profileman">
+              <i className="fas fa-user"></i>
+            </Link>
           </nav>
         </div>
-        {showComponent && <RecipeShow recipe1={recipes} />}
       </div>
     </>
   );

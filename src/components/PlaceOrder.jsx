@@ -15,7 +15,7 @@ const PlaceOrder = (props) => {
   const total = props.total;
   const [step, setStep] = useState(1);
   const t1 = total + 40;
-  // const { fname, phone, address, postalCode } = formData;
+  
 
   console.log("order data:", ingridients, total);
 
@@ -27,7 +27,7 @@ const PlaceOrder = (props) => {
     setStep(step - 1);
   };
 
-  //const [postalCode, setPostalCode] = useState("");
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

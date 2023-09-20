@@ -35,7 +35,7 @@ function SavedRecipe() {
                   (response) => response.data
                 );
                 setSavedRecipes(savedRecipesData);
-                console.log("saved : ", savedRecipes);
+               // console.log("saved : ", savedRecipes);
               })
               .catch((error) => {
                 console.error("Error fetching saved recipes:", error);

@@ -23,10 +23,7 @@ function Forgotpassword() {
       // Send password reset email to user's email address
       await resetpassword(email);
 
-      // Update user's credentials in Firestore database
-      //const db = firebase.firestore();
-      //const userRef = db.collection("auth").doc("EXmLidSvdOWbnrF4UG5s");
-      //await userRef.update({ passwordResetRequested: true }, { merge: true });
+     
 
       // Display success message
       setSuccessMessage(
@@ -95,9 +92,6 @@ function Forgotpassword() {
         </div>
       </div>
 
-      {/*<footer className=" forfooter justify-content-center">
-        <p className="text-center">Designed by 4Gani</p>
-  </footer>*/}
     </>
   );
 }

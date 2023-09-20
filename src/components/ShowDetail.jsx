@@ -1,15 +1,7 @@
 import React, { useEffect, useId, useState } from "react";
 import { useParams } from "react-router-dom";
 import { auth, db } from "../Auth/FirebaseAuth";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  doc,
-  updateDoc,
-  arrayUnion,
-  setDoc,
-} from "firebase/firestore";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import axios from "axios";
 import "../styles/ShowDetail.css";
 import SimilarRecipe from "./SimilarRecipe";
@@ -29,7 +21,6 @@ function ShowDetail() {
   };
 
   const handleSearchSubmit = async () => {
-    //event.preventDefault();
     try {
       const response = await axios.get(
         `https://api.spoonacular.com/recipes/${currentId}/information?includeNutrition=false&apiKey=${apik1}`

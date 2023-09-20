@@ -35,6 +35,7 @@ nav .content {
 }
 nav .content .links {
   margin-left: 80px;
+  margin-bottom: auto;
   display: flex;
 }
 .content .logo a {

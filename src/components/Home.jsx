@@ -6,8 +6,7 @@ import "../styles/HomeCard.css";
 import HomeCard from "./HomeCard";
 
 import "../styles/Home.css";
-//import { setUser } from "../redux/userSlice";
-//import store from "../redux/store";
+
 
 function Home() {
   const [name, setname] = useState([]);
@@ -22,7 +21,7 @@ function Home() {
       try {
         const data = await getDocs(nameCollection);
         const fildata = data.docs.map;
-        console.log(data);
+        //console.log(data);
         //store.dispatch(setUser({ email, name1 }));
       } catch (err) {
         console.log(err);
@@ -39,14 +38,7 @@ function Home() {
           className="faded-image"
         ></img>
 
-        {/*<div className="titlemain text-overlay">
-          <h1 style={{ marginTop: "10px" }} className="dish">
-            DISH
-          </h1>
-          <h1 style={{ marginTop: "10px" }} className="dish">
-            DELICIOUS
-          </h1>
-  </div>*/}
+       
       </div>
       <div className="maintitle">
         <div className="waviy">
@@ -70,7 +62,7 @@ function Home() {
 
       {error && alert(error)}
 
-      <div class="wrapper1">
+      <div className="wrapper1">
         <h1 className="animh1">
           <span>Find </span>
           <span>your </span>
@@ -106,24 +98,7 @@ function Home() {
           </div>
         </div>
       </div>
-      {/*<div className="cardsHome">
-        <div className="cardhome red">
-          <p className="tip">Hover Me</p>
-          <p className="second-text">Lorem Ipsum</p>
-        </div>
-        <div className="cardhome blue">
-          <p className="tip">Hover Me</p>
-          <p className="second-text">Lorem Ipsum</p>
-        </div>
-        <div className="cardhome green">
-          <p className="tip">Hover Me</p>
-          <p className="second-text">Lorem Ipsum</p>
-        </div>
-        <div className="cardhome yellow">
-          <p className="tip">Hover Me</p>
-          <p className="second-text">Lorem Ipsum</p>
-        </div>
-  </div>*/}
+     
     </>
   );
 }

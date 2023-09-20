@@ -28,24 +28,16 @@ function Footer() {
               <h6>Services</h6>
               <ul className="footer-links">
                 <li>
-                  <a href="">
-                    <Link to="/recipesearch">Search Recipe</Link>
-                  </a>
+                  <Link to="/recipesearch">Search Recipe</Link>
                 </li>
                 <li>
-                  <a href="">
-                    <Link to="/savedrecipe">Save Recipe</Link>
-                  </a>
+                  <Link to="/savedrecipe">Save Recipe</Link>
                 </li>
                 <li>
-                  <a href="">
-                    <Link to="/recipesearch">Genrate Shopping List</Link>
-                  </a>
+                  <Link to="/recipesearch">Genrate Shopping List</Link>
                 </li>
                 <li>
-                  <a href="">
-                    <Link to="/recipesearch">Order Ingridients</Link>
-                  </a>
+                  <Link to="/recipesearch">Order Ingridients</Link>
                 </li>
               </ul>
             </div>
@@ -54,29 +46,19 @@ function Footer() {
               <h6>Quick Links</h6>
               <ul className="footer-links">
                 <li>
-                  <a href="">
-                    <Link to="/">Home</Link>
-                  </a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="">
-                    <Link to="/contact">contact Us</Link>
-                  </a>
+                  <Link to="/contact">contact Us</Link>
                 </li>
                 <li>
-                  <a href="">
-                    <Link to="/profile">Profile</Link>
-                  </a>
+                  <Link to="/profile">Profile</Link>
                 </li>
                 <li>
-                  <a href="">
-                    <Link to="/login1">Login</Link>
-                  </a>
+                  <Link to="/login1">Login</Link>
                 </li>
                 <li>
-                  <a href="">
-                    <Link to="/signup">SignUp</Link>
-                  </a>
+                  <Link to="/signup">SignUp</Link>
                 </li>
               </ul>
             </div>

@@ -120,7 +120,7 @@ function RecipePDFGenerator() {
         </div>
       ) : (
         <div className="loaderpdf">
-          <div class="custom-loader"></div>
+          <div classname="custom-loader"></div>
         </div>
       )}
     </div>

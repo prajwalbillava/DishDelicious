@@ -35,18 +35,18 @@ function HomeCard(props) {
 
   return (
     <>
-      <div class="cardhome" id={id}>
-        <div class="inner-card">
-          <div class="img-wrapper">
+      <div className="cardhome" id={id}>
+        <div className="inner-card">
+          <div className="img-wrapper">
             <img src={imgUrl} alt="" />
           </div>
-          <div class="contenthome">
+          <div className="contenthome">
             <h1>{title}</h1>
             <p>{displaycontent}</p>
           </div>
-          <div class="btn-wrapper">
+          <div className="btn-wrapper">
             <button
-              class="view-btn"
+              className="view-btn"
               data-src="https://source.unsplash.com/collection/190727/900x600"
             >
               <Link to={`/${url}`} className="cardA">
