@@ -212,9 +212,11 @@
   }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1250px) {
   .maintitle {
-    left: 32%;
+    width: 571px;
+    left: 42%;
+    top: 36%;
   }
 }
 
