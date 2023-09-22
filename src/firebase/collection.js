@@ -33,7 +33,8 @@ export const createUserDocument = (uid, email, username) => {
     email: email,
     username: username,
     uid: uid,
-    savedRecipes: [], // You can add additional fields if needed
+    savedRecipes: [], 
+    // You can add additional fields if needed
   })
     .then(() => {
       console.log("Firestore document created for user:", uid);
