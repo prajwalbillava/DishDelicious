@@ -7,16 +7,15 @@ import HomeCard from "./HomeCard";
 
 import "../styles/Home.css";
 
-
 function Home() {
   const [name, setname] = useState([]);
   const [error, setError] = useState("");
   const nameCollection = collection(db, "auth");
   const { currentUser } = useAuth();
 
-  const email = currentUser.email;
+  //const email = currentUser.email;
 
-  useEffect(() => {
+  /*useEffect(() => {
     const getNameList = async () => {
       try {
         const data = await getDocs(nameCollection);
@@ -28,7 +27,7 @@ function Home() {
       }
     };
     getNameList();
-  }, []);
+  }, []);*/
 
   return (
     <>
@@ -37,8 +36,6 @@ function Home() {
           src="https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjJ8fGZvb2R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
           className="faded-image"
         ></img>
-
-       
       </div>
       <div className="maintitle">
         <div className="waviy">
@@ -98,7 +95,6 @@ function Home() {
           </div>
         </div>
       </div>
-     
     </>
   );
 }

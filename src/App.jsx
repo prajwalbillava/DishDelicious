@@ -78,13 +78,13 @@ function App() {
         }
       >
         <Route element={<PrivateRoute />}>
-          <Route index element={<Home />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/savedrecipe" element={<SavedRecipe />}></Route>
         </Route>
         <Route path="/login1" element={<Login1 linkComponent={Link} />}></Route>
         <Route path="/signup" element={<SignUp linkComponent={Link} />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
-
+        <Route index element={<Home />}></Route>
         <Route
           path="/recipesearch"
           element={<RecipeShow linkComponent={Link} />}
@@ -93,7 +93,7 @@ function App() {
         <Route path="/recipepdf/:id" element={<RecipePDFGenerator />}></Route>
         <Route path="/orderingri/:id" element={<OrderIngri />}></Route>
         <Route path="/forgotpass" element={<Forgotpassword />}></Route>
-        <Route path="/savedrecipe" element={<SavedRecipe />}></Route>
+
         <Route path="*" element={<Errorpage linkComponent={Link} />} />
       </Route>
     )
