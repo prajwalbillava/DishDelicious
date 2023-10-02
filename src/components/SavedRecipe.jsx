@@ -35,7 +35,7 @@ function SavedRecipe() {
                   (response) => response.data
                 );
                 setSavedRecipes(savedRecipesData);
-               // console.log("saved : ", savedRecipes);
+                // console.log("saved : ", savedRecipes);
               })
               .catch((error) => {
                 console.error("Error fetching saved recipes:", error);
@@ -53,50 +53,57 @@ function SavedRecipe() {
     <>
       <div className="mainsave">
         <h2 className="saveheader">Saved Recipes</h2>
-        <div className="containersave">
-          {savedRecipes.map((recipe) => (
-            <div key={recipe.id} className="cardsave">
-              <div className="imgBx">
-                <img src={recipe.image} alt="" />
-              </div>
-              <div className="detailssave">
-                <div className="contentsave">
-                  <h2>
-                    {recipe.title}
-                    <br />
-                  </h2>
-                  <h5>
-                    Dish Type :{" "}
-                    {recipe.vegetarian ? "Vegitarian" : "Non-Vegitarian"}
-                  </h5>
-                  <h5>Time To Prepare : {recipe.readyInMinutes}Minutes</h5>
+        {savedRecipes ? (
+          <div className="containersave">
+            {savedRecipes.map((recipe) => (
+              <div key={recipe.id} className="cardsave">
+                <div className="imgBx">
+                  <img src={recipe.image} alt="" />
+                </div>
+                <div className="detailssave">
+                  <div className="contentsave">
+                    <h2>
+                      {recipe.title}
+                      <br />
+                    </h2>
+                    <h5>
+                      Dish Type :{" "}
+                      {recipe.vegetarian ? "Vegitarian" : "Non-Vegitarian"}
+                    </h5>
+                    <h5>Time To Prepare : {recipe.readyInMinutes}Minutes</h5>
 
-                  <Link to={`/recipeshow/${recipe.id.toString()}`} id="seemore">
-                    <button className="savebutton">
-                      <div className="svg-wrapper-1">
-                        <div className="svg-wrapper">
-                          <svg
-                            height="24"
-                            width="24"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                            <path
-                              d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                              fill="currentColor"
-                            ></path>
-                          </svg>
+                    <Link
+                      to={`/recipeshow/${recipe.id.toString()}`}
+                      id="seemore"
+                    >
+                      <button className="savebutton">
+                        <div className="svg-wrapper-1">
+                          <div className="svg-wrapper">
+                            <svg
+                              height="24"
+                              width="24"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M0 0h24v24H0z" fill="none"></path>
+                              <path
+                                d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                                fill="currentColor"
+                              ></path>
+                            </svg>
+                          </div>
                         </div>
-                      </div>
-                      <span>See Recipe</span>
-                    </button>
-                  </Link>
+                        <span>See Recipe</span>
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <h1>No Saved Recipes</h1>
+        )}
       </div>
     </>
   );

@@ -40,12 +40,12 @@ function Navbar1() {
                     <li>
                       <Link to="/signup">signUp</Link>
                     </li>
-                    <li>
+                    {/*<li>
                       <a href="#">Drop Menu 3</a>
                     </li>
                     <li>
                       <a href="#">Drop Menu 4</a>
-                    </li>
+  </li>*/}
                   </ul>
                 </li>
                 <li>
@@ -61,12 +61,12 @@ function Navbar1() {
                     <li>
                       <Link to="/savedrecipe">Saved Recipes</Link>
                     </li>
-                    <li>
+                    {/*<li>
                       <a href="#">Drop Menu 3</a>
                     </li>
                     <li>
                       <a href="#">Drop Menu 4</a>
-                    </li>
+  </li>*/}
                     {/*<li>
                       <a href="#" className="desktop-link">
                         More Items

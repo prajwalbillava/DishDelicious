@@ -12,7 +12,7 @@ function Footer() {
               <h6>About Us</h6>
               <p className="text-justify">
                 Welcome to <i>Dish Delicious</i>, your go-to resource for all
-                your meal planning and recipe search needs. Our team of
+                your recipe search and ingridients ordering needs. Our team of
                 experienced chefs, nutritionists, and software developers have
                 come together to create a user-friendly platform that simplifies
                 the meal planning process and provides access to a wide range of
@@ -69,8 +69,8 @@ function Footer() {
           <div className="row">
             <div className="col-md-8 col-sm-6 col-xs-12">
               <p className="copyright-text">
-                Copyright &copy; 2023 All Rights Reserved by
-                <a href="#">Dish Delicious</a>.
+                Made with ❤️ by
+                <a href="https://github.com/prajwalbillava"> Prajwal</a>
               </p>
             </div>
 
